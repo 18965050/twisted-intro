@@ -27,7 +27,7 @@ for that to work.
     _, addresses = parser.parse_args()
 
     if not addresses:
-        print parser.format_help()
+        print(parser.format_help())
         parser.exit()
 
     def parse_address(addr):
@@ -42,13 +42,13 @@ for that to work.
 
         return host, int(port)
 
-    return map(parse_address, addresses)
+    return list(map(parse_address, addresses))
 
 
 def get_poetry(sockets):
     """Download poety from all the given sockets."""
 
-    poems = dict.fromkeys(sockets, '') # socket -> accumulated poem
+    poems = dict.fromkeys(sockets, b'') # socket -> accumulated poem
 
     # socket -> task numbers
     sock2task = dict([(s, i + 1) for i, s in enumerate(sockets)])
@@ -66,12 +66,12 @@ def get_poetry(sockets):
         # rlist is the list of sockets with data ready to read
 
         for sock in rlist:
-            data = ''
+            data = b''
 
             while True:
                 try:
                     new_data = sock.recv(1024)
-                except socket.error, e:
+                except socket.error as e:
                     if e.args[0] == errno.EWOULDBLOCK:
                         # this error code means we would have
                         # blocked if the socket was blocking.
@@ -93,11 +93,11 @@ def get_poetry(sockets):
             if not data:
                 sockets.remove(sock)
                 sock.close()
-                print 'Task %d finished' % task_num
+                print('Task %d finished' % task_num)
             else:
                 addr_fmt = format_address(sock.getpeername())
                 msg = 'Task %d: got %d bytes of poetry from %s'
-                print  msg % (task_num, len(data), addr_fmt)
+                print(msg % (task_num, len(data), addr_fmt))
 
             poems[sock] += data
 
@@ -123,16 +123,16 @@ def main():
 
     start = datetime.datetime.now()
 
-    sockets = map(connect, addresses)
+    sockets = list(map(connect, addresses))
 
     poems = get_poetry(sockets)
 
     elapsed = datetime.datetime.now() - start
 
     for i, sock in enumerate(sockets):
-        print 'Task %d: %d bytes of poetry' % (i + 1, len(poems[sock]))
+        print('Task %d: %d bytes of poetry' % (i + 1, len(poems[sock])))
 
-    print 'Got %d poems in %s' % (len(addresses), elapsed)
+    print('Got %d poems in %s' % (len(addresses), elapsed))
 
 
 if __name__ == '__main__':

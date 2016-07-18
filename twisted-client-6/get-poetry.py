@@ -32,7 +32,7 @@ ports for that to work.
     _, addresses = parser.parse_args()
 
     if len(addresses) < 2:
-        print parser.format_help()
+        print(parser.format_help())
         parser.exit()
 
     def parse_address(addr):
@@ -47,12 +47,12 @@ ports for that to work.
 
         return host, int(port)
 
-    return map(parse_address, addresses)
+    return list(map(parse_address, addresses))
 
 
 class PoetryProtocol(Protocol):
 
-    poem = ''
+    poem = b''
 
     def dataReceived(self, data):
         self.poem += data
@@ -164,17 +164,17 @@ def poetry_main():
         d = proxy.xform('cummingsify', poem)
 
         def fail(err):
-            print >>sys.stderr, 'Cummingsify failed!'
+            print('Cummingsify failed!', file=sys.stderr)
             return poem
 
         return d.addErrback(fail)
 
     def got_poem(poem):
-        print poem
+        print(poem)
         poems.append(poem)
 
     def poem_failed(err):
-        print >>sys.stderr, 'The poem download failed.'
+        print('The poem download failed.', file=sys.stderr)
         errors.append(err)
 
     def poem_done(_):

@@ -98,7 +98,7 @@ def main():
     port = reactor.listenTCP(options.port or 0, factory,
                              interface=options.iface)
 
-    print 'Serving transforms on %s.' % (port.getHost(),)
+    print('Serving transforms on %s.' % (port.getHost(),))
 
     reactor.run()
 

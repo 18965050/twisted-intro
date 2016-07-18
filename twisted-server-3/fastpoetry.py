@@ -38,7 +38,7 @@ class PoetryService(service.Service):
 # configuration parameters
 port = 10000
 iface = 'localhost'
-poetry_file = 'poetry/ecstasy.txt'
+poetry_file = '../poetry/ecstasy.txt'
 
 # this will hold the services that combine to form the poetry server
 top_service = service.MultiService()

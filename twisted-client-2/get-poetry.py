@@ -31,7 +31,7 @@ for that to work.
     _, addresses = parser.parse_args()
 
     if not addresses:
-        print parser.format_help()
+        print(parser.format_help())
         parser.exit()
 
     def parse_address(addr):
@@ -46,18 +46,18 @@ for that to work.
 
         return host, int(port)
 
-    return map(parse_address, addresses)
+    return list(map(parse_address, addresses))
 
 
 class PoetryProtocol(Protocol):
 
-    poem = ''
+    poem = b''
     task_num = 0
 
     def dataReceived(self, data):
         self.poem += data
         msg = 'Task %d: got %d bytes of poetry from %s'
-        print  msg % (self.task_num, len(data), self.transport.getPeer())
+        print(msg % (self.task_num, len(data), self.transport.getPeer()))
 
     def connectionLost(self, reason):
         self.poemReceived(self.poem)
@@ -95,10 +95,10 @@ class PoetryClientFactory(ClientFactory):
 
     def report(self):
         for i in self.poems:
-            print 'Task %d: %d bytes of poetry' % (i, len(self.poems[i]))
+            print('Task %d: %d bytes of poetry' % (i, len(self.poems[i])))
 
     def clientConnectionFailed(self, connector, reason):
-        print 'Failed to connect to:', connector.getDestination()
+        print('Failed to connect to:', connector.getDestination())
         self.poem_finished()
 
 
@@ -119,7 +119,7 @@ def poetry_main():
 
     elapsed = datetime.datetime.now() - start
 
-    print 'Got %d poems in %s' % (len(addresses), elapsed)
+    print('Got %d poems in %s' % (len(addresses), elapsed))
 
 
 if __name__ == '__main__':

@@ -297,7 +297,7 @@ def get_next_pair():
             return Callback(cmd)
 
     try:
-        line = raw_input()
+        line = input()
     except EOFError:
         sys.exit()
 
@@ -320,7 +320,7 @@ def get_pairs():
     They are returned as Callback widgets.
     """
 
-    print """\
+    print("""\
 Enter a list of callback/errback pairs in the form:
 
   CALLBACK ERRBACK
@@ -353,20 +353,20 @@ really an Exception wrapped in a Failure, i.e:
   value* == Failure(Exception(value))
 
 You will want to make your terminal as wide as possible.
-"""
+""")
 
     pairs = []
 
     while True:
         try:
             pair = get_next_pair()
-        except BadInput, e:
-            print 'ERROR:', e
+        except BadInput as e:
+            print('ERROR:', e)
             continue
 
         if pair is None:
             if not pairs:
-                print 'You must enter at least one pair.'
+                print('You must enter at least one pair.')
                 continue
             else:
                 break
@@ -384,7 +384,7 @@ def draw_single_column(d, callback, errback):
 
     d.draw(screen, 0, 4)
 
-    print screen
+    print(screen)
 
     screen.clear()
 
@@ -393,7 +393,7 @@ def draw_single_column(d, callback, errback):
 
     callback.draw(screen, 0, 5)
 
-    print screen
+    print(screen)
 
     screen.clear()
 
@@ -402,7 +402,7 @@ def draw_single_column(d, callback, errback):
 
     errback.draw(screen, 0, 5)
 
-    print screen
+    print(screen)
 
 
 def draw_multi_column(d, callback, errback):
@@ -424,7 +424,7 @@ def draw_multi_column(d, callback, errback):
     screen.draw_vert_line(d.width + 3, 3, callback.height)
     screen.draw_vert_line(d.width + 3 + d.width + 6, 3, callback.height)
 
-    print screen
+    print(screen)
 
 
 def main():

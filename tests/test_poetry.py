@@ -82,7 +82,7 @@ class PoetryTestCase(TestCase):
         d = get_poetry('127.0.0.1', self.portnum)
 
         def got_poem(poem):
-            self.assertEquals(poem, TEST_POEM)
+            self.assertEqual(poem, TEST_POEM)
 
         d.addCallback(got_poem)
 

@@ -60,7 +60,7 @@ class PoetryFactory(ServerFactory):
 def main():
     options, poetry_file = parse_args()
 
-    poem = open(poetry_file).read()
+    poem = open(poetry_file,'rb').read()
 
     factory = PoetryFactory(poem)
 
@@ -69,7 +69,7 @@ def main():
     port = reactor.listenTCP(options.port or 0, factory,
                              interface=options.iface)
 
-    print 'Serving %s on %s.' % (poetry_file, port.getHost())
+    print('Serving %s on %s.' % (poetry_file, port.getHost()))
 
     reactor.run()
 
